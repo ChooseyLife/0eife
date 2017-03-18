@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 04</title>
+    <style>
+        .number{
+            display: inline-block;
+            color: #fff;
+            background: red;
+            padding: 10px;
+            margin: 5px;
+            font-size:16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<label><input type="text" id="setValue"></label>
+<button id="left-in">左侧入</button>
+<button id="right-in">右侧入</button>
+<button id="left-out">左侧出</button>
+<button id="right-out">右侧出</button>
+<p></p>
+
+
+
+<script type="text/javascript">
+
+    init();
+    function init() {
+        document.querySelector("#left-in").onclick = Shift;
+        document.querySelector("#right-in").onclick = Push;
+        document.querySelector("#left-out").onclick = Unshift;
+        document.querySelector("#right-out").onclick = Pop;
+        var f = document.querySelector("p");
+        var oSpan = document.querySelectorAll("span");
+
+        //移除点击随意的一员
+        oSpan.forEach(function (value, index, array) {
+           value.addEventListener("click",function () {
+               f.removeChild(this);
+           })
+        });
+    }
+
+
+    function Shift(data) {
+        var value = document.querySelector("#setValue").value;
+        var ele = document.createElement("span");
+        ele.innerHTML = value;
+        ele.setAttribute("class","number");
+        var content = document.querySelector("p");
+        if(!content.hasChildNodes){
+            content.appendChild(ele);
+        }else{
+            content.insertBefore(ele,content.childNodes[0])
+        }
+    }
+
+    function Push() {
+        var value = document.querySelector("#setValue").value;
+        var ele = document.createElement("span");
+        ele.innerHTML = value;
+        ele.setAttribute("class","number");
+        var content = document.querySelector("p");
+        content.appendChild(ele);
+    }
+
+    function Pop() {
+        var content = document.querySelector("p");
+        console.log(content.childNodes.length);
+        content.removeChild(content.childNodes[content.childNodes.length-1]);
+    }
+
+    function Unshift() {
+        var content = document.querySelector("p");
+        content.removeChild(content.childNodes[0]);
+    }
+
+</script>
+</body>
+</html>
