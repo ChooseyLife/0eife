@@ -21,6 +21,7 @@
 <button id="right-in">右侧入</button>
 <button id="left-out">左侧出</button>
 <button id="right-out">右侧出</button>
+<button id="bubble">冒泡排序</button>
 <p></p>
 
 
@@ -32,6 +33,7 @@
         document.querySelector("#right-in").onclick = Push;
         document.querySelector("#left-out").onclick = Unshift;
         document.querySelector("#right-out").onclick = Pop;
+        document.querySelector("#bubble").onclick = bubbleSort;
         var f = document.querySelector("p");
         var oSpan = document.querySelectorAll("span");
 
@@ -39,22 +41,28 @@
         oSpan.forEach(function (value, index, array) {
             value.addEventListener("click",function () {
                 f.removeChild(this);
+                if(array.length<=0){
+                    alert("队列元素全清除了！");
+                    return false;
+                }
             })
         });
     }
 
     function Shift() {
         var value = document.querySelector("#setValue").value;
-        if(value > 10 || value >100){
-            alert("超出限制，请重新输入")
+        if(value < 10 || value > 100){
+            alert("超出数字限制，请重新输入")
+            return false;
         }
         var ele = document.createElement("span");
-        /*ele.innerHTML = "";*/
         ele.setAttribute("class","number");
+        ele.setAttribute("value",value);
         ele.style.height = parseInt(value)*4 + "px";
         var content = document.querySelector("p");
         if(content.childNodes.length > 61){
             alert("超出队列长度!");
+            return false;
         }
         if(!content.hasChildNodes){
             content.appendChild(ele);
@@ -65,24 +73,57 @@
 
     function Push() {
         var value = document.querySelector("#setValue").value;
+        if(value < 10 || value > 100){
+            alert("超出数字限制，请重新输入");
+            return false;
+        }
         var ele = document.createElement("span");
-        ele.innerHTML = value;
         ele.setAttribute("class","number");
+        ele.setAttribute("value",value);
+        ele.style.height = parseInt(value)*4 + "px";
         var content = document.querySelector("p");
+        if(content.childNodes.length > 61){
+            alert("超出队列长度!");
+            return false;
+        }
         content.appendChild(ele);
     }
 
     function Pop() {
         var content = document.querySelector("p");
-        console.log(content.childNodes.length);
         content.removeChild(content.childNodes[content.childNodes.length-1]);
+        if(content.childNodes.length<=0){
+            alert("队列元素全清除了！");
+            return false;
+        }
     }
 
     function Unshift() {
         var content = document.querySelector("p");
         content.removeChild(content.childNodes[0]);
+        if(content.childNodes.length<=0){
+            alert("队列元素全清除了！");
+            return false;
+        }
     }
 
+    function bubbleSort() {
+        var content = document.querySelectorAll("span");
+        var spansValue = [],temp = "";
+        content.forEach(function (value,index,array) {
+            spansValue.push(value.getAttribute("value"));
+        });
+        for(var i = 0; i < spansValue.length; i++){
+            for(var j = 0 ; j < spansValue.length-1 ; j++){
+                if(spansValue[j] > spansValue[j+1]){
+                    temp = spansValue[j+1];
+                    spansValue[j+1] = spansValue[j];
+                    spansValue[j] = temp;
+                }
+            }
+        }
+        return spansValue;
+    }
 </script>
 </body>
 </html>
