@@ -108,6 +108,7 @@
     }
 
     function bubbleSort() {
+        var html = document.querySelector("p");
         var content = document.querySelectorAll("span");
         var spansValue = [],temp = "";
         content.forEach(function (value,index,array) {
@@ -122,6 +123,13 @@
                 }
             }
         }
+        html.innerHTML = "";
+        spansValue.forEach(function (value) {
+            var ele = document.createElement("span");
+            ele.setAttribute("class","number");
+            ele.style.height = parseInt(value)*4 + "px";
+            html.appendChild(ele);
+        });
         return spansValue;
     }
 </script>
