@@ -49,40 +49,68 @@
 
     function Shift() {
         var value = document.querySelector("#setValue").value;
-        var ele = document.createElement("span");
-        ele.innerHTML = value;
-        ele.setAttribute("class","number");
-        var content = document.querySelector("p");
-        if(!content.hasChildNodes){
-            content.appendChild(ele);
-        }else{
-            content.insertBefore(ele,content.childNodes[0])
-        }
+        var patt=/[^0-9a-zA-Z\u4e00-\u9fa5]/g;
+        var wordList=value.split(patt);
+        wordList.forEach(function (value, index) {
+            var ele = document.createElement("span");
+           if(value.length>0){
+               ele.setAttribute("class","number");
+               ele.innerHTML = value;
+               var content = document.querySelector("p");
+               if(!content.hasChildNodes){
+                   content.appendChild(ele);
+               }else{
+                   content.insertBefore(ele,content.childNodes[0])
+               }
+           }
+        });
     }
 
     function Push() {
         var value = document.querySelector("#setValue").value;
-        var ele = document.createElement("span");
-        ele.innerHTML = value;
-        ele.setAttribute("class","number");
-        var content = document.querySelector("p");
-        content.appendChild(ele);
+        var patt=/[^0-9a-zA-Z\u4e00-\u9fa5]/g;
+        var wordList=value.split(patt);
+        wordList.forEach(function (value, index) {
+            var ele = document.createElement("span");
+            if(value.length>0){
+                ele.setAttribute("class","number");
+                ele.innerHTML = value;
+                var content = document.querySelector("p");
+                content.appendChild(ele);
+            }
+        });
+
     }
 
     function Pop() {
         var content = document.querySelector("p");
-        console.log(content.childNodes.length);
+        console.log();
+        if(content.childNodes.length<0){
+            alert("当前队列为空");
+            return false
+        }
         content.removeChild(content.childNodes[content.childNodes.length-1]);
     }
 
     function Unshift() {
         var content = document.querySelector("p");
+        if(content.childNodes.length<0){
+            alert("当前队列为空");
+            return false
+        }
         content.removeChild(content.childNodes[0]);
     }
 
     function search() {
         var searchVal = document.querySelector("#searchValue").value;
-        
+        var hasHTML = document.querySelectorAll("span");
+        if(searchVal == "") {alert("请输入查找内容!");return}
+        console.log(hasHTML);
+        hasHTML.forEach(function (v, i, a) {
+            if(v.innerHTML == searchVal){
+                v.style.color = "green";
+            }
+        })
     }
 </script>
 </body>
