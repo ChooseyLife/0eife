@@ -15,13 +15,13 @@
         }
         .box-two{
             width:270px;
-            height:265px;
+            height:275px;
             display: inline-block;
             padding:10px
         }
         .box-two-s{
             width:125px;
-            height:265px;
+            height:270px;
             display: inline-block;
         }
         .active{
@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-    <div class="box border active">
+    <div class="box border">
         <div class="border box-two">
             <div class="border box-two-s"></div>
             <div class="border box-two-s"></div>
@@ -40,5 +40,81 @@
             <div class="border box-two-s"></div>
         </div>
     </div>
+    <button>Dlr</button>
+    <button>Ldr</button>
+    <button>Lrd</button>
+<script type="text/javascript">
+    var box = document.querySelector(".box"),
+        data = [],
+        timer = null;
+    var btn = document.querySelectorAll("button");
+    btn[0].onclick = function () {
+        reset();
+        Dlr(box);
+        setCss();
+    };
+    btn[1].onclick = function () {
+        reset();
+        Ldr(box);
+        setCss();
+    };
+    btn[2].onclick = function () {
+        reset();
+        Lrd(box);
+        setCss();
+    };
+
+    function Dlr(node) {
+        if(node){
+            data.push(node);
+            Dlr(node.firstElementChild);
+            Dlr(node.lastElementChild);
+        }
+    }
+
+    function Ldr(node) {
+        if(node){
+            Dlr(node.firstElementChild);
+            data.push(node);
+            Dlr(node.lastElementChild);
+        }
+    }
+
+    function Lrd(node) {
+        if(node){
+            Dlr(node.firstElementChild);
+            Dlr(node.lastElementChild);
+            data.push(node);
+        }
+    }
+
+    function reset() {
+        var doc = document,
+            divs = doc.querySelectorAll("div"),
+            data = null;
+        divs.forEach(function (v, i, a) {
+            v.style.border = "1px solid #c0c0c0";
+        })
+    }
+
+    function setCss() {
+        var len = data.length,
+            i = 0;
+        data[i].style.border = "1px solid #ffcc00";
+        timer = setInterval(function(){
+            i++;
+            if(i<len){
+                data[i-1].style.border = "1px solid #c0c0c0";//前一个重置为白色背景
+                data[i].style.border = "1px solid #ffcc00";
+            }else{
+                clearInterval(timer);
+                data[len-1].style.border = "1px solid #c0c0c0";//结束后，最后一个背景重置为白色
+                //alert('over');
+            }
+        },500);
+    }
+
+
+</script>
 </body>
 </html>
